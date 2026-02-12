@@ -33,6 +33,7 @@
             "js": [
                 "regex.js",
                 "platformDetector.js",
+                "domHelpers.js",
                 "alert.js",
                 "formMonitor.js",
                 "clipboardMonitor.js",
