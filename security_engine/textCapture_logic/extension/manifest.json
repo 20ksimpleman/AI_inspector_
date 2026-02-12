@@ -1,0 +1,69 @@
+{
+    "manifest_version": 3,
+    "name": "AI Inspector - PII Data Leak Prevention",
+    "version": "2.0.0",
+    "description": "Intercepts PII leaks across AI platforms like ChatGPT, Claude, Gemini, Perplexity, and Copilot.",
+    "permissions": [
+        "activeTab",
+        "storage"
+    ],
+    "host_permissions": [
+        "https://chat.openai.com/*",
+        "https://chatgpt.com/*",
+        "https://claude.ai/*",
+        "https://gemini.google.com/*",
+        "https://www.perplexity.ai/*",
+        "https://copilot.microsoft.com/*"
+    ],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://chat.openai.com/*",
+                "https://chatgpt.com/*",
+                "https://claude.ai/*",
+                "https://gemini.google.com/*",
+                "https://www.perplexity.ai/*",
+                "https://copilot.microsoft.com/*",
+                "https://*/*",
+                "http://*/*"
+            ],
+            "js": [
+                "regex.js",
+                "platformDetector.js",
+                "alert.js",
+                "formMonitor.js",
+                "clipboardMonitor.js",
+                "urlScanner.js",
+                "realtimeMonitor.js",
+                "content.js"
+            ],
+            "run_at": "document_idle"
+        }
+    ],
+    "action": {
+        "default_popup": "popup/popup.html",
+        "default_icon": {
+            "16": "icons/icon16.png",
+            "48": "icons/icon48.png",
+            "128": "icons/icon128.png"
+        }
+    },
+    "icons": {
+        "16": "icons/icon16.png",
+        "48": "icons/icon48.png",
+        "128": "icons/icon128.png"
+    },
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "pageScript.js"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Inspector - Extension Test Page</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #0d0d1a;
+            color: #e0e0f0;
+            padding: 30px;
+            min-height: 100vh;
+        }
+
+        h1 {
+            color: #ff6b6b;
+            margin-bottom: 8px;
+        }
+
+        h2 {
+            color: #6bc5ff;
+            margin: 24px 0 12px;
+            font-size: 16px;
+        }
+
+        .subtitle {
+            color: #7a7a9a;
+            font-size: 13px;
+            margin-bottom: 30px;
+        }
+
+        .test-section {
+            background: #12121f;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            color: #b0b0cc;
+            font-size: 12px;
+            margin-bottom: 6px;
+        }
+
+        textarea,
+        input[type="text"],
+        input[type="email"] {
+            width: 100%;
+            padding: 10px 14px;
+            background: #1a1a2e;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: #e0e0f0;
+            font-size: 13px;
+            margin-bottom: 10px;
+            resize: vertical;
+        }
+
+        textarea {
+            min-height: 80px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #ff4b4b, #cc2936);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+
+        button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(255, 75, 75, 0.3);
+        }
+
+        button.secondary {
+            background: rgba(107, 197, 255, 0.15);
+            color: #6bc5ff;
+        }
+
+        .result {
+            margin-top: 10px;
+            padding: 10px;
+            background: #0d0d1a;
+            border-radius: 8px;
+            font-family: 'Cascadia Code', monospace;
+            font-size: 12px;
+            white-space: pre-wrap;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .pass {
+            color: #4caf50;
+        }
+
+        .fail {
+            color: #ff6b6b;
+        }
+
+        .warn {
+            color: #ffaa5b;
+        }
+
+        .info {
+            color: #6bc5ff;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        @media (max-width: 700px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        form {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>AI Inspector — Test Suite</h1>
+    <p class="subtitle">Tests PII detection, modal alerts, form monitoring, clipboard monitoring, and URL scanning</p>
+
+    <!-- Test 1: PII Detection Engine -->
+    <h2>1. PII Detection Engine (regex.js)</h2>
+    <div class="test-section">
+        <button onclick="runDetectionTests()">Run All Detection Tests</button>
+        <div id="detectionResults" class="result"></div>
+    </div>
+
+    <!-- Test 2: Modal Alert -->
+    <h2>2. Block Modal (alert.js)</h2>
+    <div class="test-section">
+        <button onclick="testBlockModal()">Trigger Block Modal</button>
+        <button class="secondary" onclick="testToast()">Trigger Toast</button>
+        <div id="alertResults" class="result"></div>
+    </div>
+
+    <!-- Test 3: Form Monitoring -->
+    <h2>3. Form Monitoring (formMonitor.js)</h2>
+    <div class="test-section">
+        <form id="testForm" onsubmit="return false;">
+            <div class="grid">
+                <div>
+                    <label>Name (safe field)</label>
+                    <input type="text" name="username" value="John Smith">
+                </div>
+                <div>
+                    <label>Email (PII — should trigger)</label>
+                    <input type="email" name="email" value="john.doe@gmail.com">
+                </div>
+            </div>
+            <button type="submit">Submit Form (should be blocked)</button>
+        </form>
+        <div id="formResults" class="result"></div>
+    </div>
+
+    <!-- Test 4: Clipboard Monitoring -->
+    <h2>4. Clipboard Detection (clipboardMonitor.js)</h2>
+    <div class="test-section">
+        <label>Paste PII text here (try pasting "my SSN is 123-45-6789")</label>
+        <textarea id="pasteArea" placeholder="Paste text containing PII here..."></textarea>
+        <label>Copy this text (select and Ctrl+C):</label>
+        <input type="text" id="copySource" value="My card is 4111111111111111" readonly onclick="this.select()">
+        <div id="clipboardResults" class="result"></div>
+    </div>
+
+    <!-- Test 5: URL Scanning -->
+    <h2>5. URL Scanning (urlScanner.js)</h2>
+    <div class="test-section">
+        <button onclick="testURLScan()">Scan Current URL</button>
+        <button class="secondary" onclick="testURLWithPII()">Simulate PII in URL</button>
+        <div id="urlResults" class="result"></div>
+    </div>
+
+    <!-- Test 6: Real-Time PII Detection -->
+    <h2>6. Real-Time PII Detection (realtimeMonitor.js)</h2>
+    <div class="test-section">
+        <p style="color: #b0b0cc; font-size: 12px; margin-bottom: 12px;">
+            Type PII (e.g., <code style="color:#ff6b6b">john@gmail.com</code> or <code
+                style="color:#ff6b6b">4111111111111111</code>) in the fields below.
+            A hard block modal should appear within ~150ms after you stop typing.
+        </p>
+
+        <label>Textarea (standard input)</label>
+        <textarea id="realtimeTestTextarea" placeholder="Type PII here — e.g. my email is john@gmail.com"></textarea>
+
+        <label>ContentEditable div (simulates ChatGPT ProseMirror)</label>
+        <div id="realtimeTestDiv" contenteditable="true" translate="no"
+            style="width:100%; min-height:80px; padding:10px 14px; background:#1a1a2e; border:1px solid rgba(255,255,255,0.1); border-radius:8px; color:#e0e0f0; font-size:13px; margin-bottom:10px; outline:none;"
+            data-placeholder="Type PII here — simulates ChatGPT's contenteditable input">
+            <p><br></p>
+        </div>
+
+        <div id="realtimeResults" class="result"></div>
+    </div>
+
+    <!-- Test 7: Platform Detection -->
+    <h2>7. Platform Detection (platformDetector.js)</h2>
+    <div class="test-section">
+        <button onclick="testPlatformDetection()">Test All Platforms</button>
+        <div id="platformResults" class="result"></div>
+    </div>
+
+    <!-- Load all modules -->
+    <script src="regex.js"></script>
+    <script src="platformDetector.js"></script>
+    <script src="alert.js"></script>
+    <script src="formMonitor.js"></script>
+    <script src="clipboardMonitor.js"></script>
+    <script src="urlScanner.js"></script>
+    <script src="realtimeMonitor.js"></script>
+
+    <script>
+        // Expose global reporter stub
+        window.__aiInspectorReport = function (type, source, findings) {
+            console.log(`[Event] ${type} | ${source} |`, findings);
+        };
+
+        const detector = new PIIDetector();
+        let log = (id, msg, cls = 'info') => {
+            document.getElementById(id).innerHTML += `<span class="${cls}">${msg}</span>\n`;
+        };
+
+        // ────────────────────────────────────────────────────
+        // 1. PII Detection Tests
+        // ────────────────────────────────────────────────────
+        function runDetectionTests() {
+            const el = 'detectionResults';
+            document.getElementById(el).innerHTML = '';
+
+            const tests = [
+                // Should detect
+                { input: "my email is john@gmail.com", expect: true, label: "Email" },
+                { input: "call me at 9876543210", expect: true, label: "Phone" },
+                { input: "SSN: 123-45-6789", expect: true, label: "SSN" },
+                { input: "Aadhaar: 1234 5678 9012", expect: true, label: "Aadhaar" },
+                { input: "PAN: ABCDE1234F", expect: true, label: "PAN" },
+                { input: "card 4111111111111111", expect: true, label: "Credit Card" },
+                { input: "ip: 192.168.1.1", expect: true, label: "IP Address" },
+                { input: "password: MySecret123!", expect: true, label: "Password" },
+                { input: "-----BEGIN RSA PRIVATE KEY-----", expect: true, label: "Private Key" },
+
+                // Should NOT detect (example data)
+                { input: "use test@example.com for testing", expect: false, label: "Example email (excluded)" },
+                { input: "dummy phone 1234567890", expect: false, label: "Dummy phone (excluded)" },
+                { input: "const email = 'user@test.com';", expect: false, label: "Code variable (excluded)" },
+
+                // Should NOT detect (no PII)
+                { input: "hello world", expect: false, label: "No PII" },
+                { input: "what is machine learning?", expect: false, label: "Safe query" },
+            ];
+
+            let passed = 0, total = tests.length;
+
+            for (const t of tests) {
+                const result = detector.detect(t.input);
+                const hasPII = result.length > 0;
+                const ok = hasPII === t.expect;
+                passed += ok ? 1 : 0;
+
+                const status = ok ? '✓ PASS' : '✗ FAIL';
+                const cls = ok ? 'pass' : 'fail';
+                const found = result.map(r => r.name).join(', ') || 'none';
+                log(el, `[${status}] ${t.label}: "${t.input.slice(0, 40)}..." → ${found}`, cls);
+            }
+
+            log(el, `\n━━━ Results: ${passed}/${total} passed ━━━`, passed === total ? 'pass' : 'fail');
+        }
+
+        // ────────────────────────────────────────────────────
+        // 2. Modal & Toast Tests
+        // ────────────────────────────────────────────────────
+        async function testBlockModal() {
+            document.getElementById('alertResults').innerHTML = '';
+            log('alertResults', 'Triggering block modal...', 'info');
+
+            const findings = [
+                { name: 'Email', match: 'john@gmail.com', severity: 'high' },
+                { name: 'Credit Card', match: '4111111111111111', severity: 'critical' },
+            ];
+
+            const proceed = await AIInspectorAlert.showBlockModal(findings, 'prompt');
+            log('alertResults', `User chose: ${proceed ? 'Proceed Anyway' : 'Cancel'}`, proceed ? 'warn' : 'pass');
+        }
+
+        function testToast() {
+            AIInspectorAlert.showToast('This is a test warning — PII detected in clipboard', 3000);
+            log('alertResults', 'Toast notification shown (3s)', 'info');
+        }
+
+        // ────────────────────────────────────────────────────
+        // 5. URL Scan Tests
+        // ────────────────────────────────────────────────────
+        function testURLScan() {
+            document.getElementById('urlResults').innerHTML = '';
+            const scanner = new URLScanner(detector);
+            log('urlResults', `Scanning: ${window.location.href}`, 'info');
+            scanner.scanURL(window.location.href);
+            log('urlResults', 'Scan complete — check console for any PII findings', 'info');
+        }
+
+        function testURLWithPII() {
+            document.getElementById('urlResults').innerHTML = '';
+            const scanner = new URLScanner(detector);
+            const fakeURL = 'https://example.com/search?email=john@gmail.com&ssn=123-45-6789';
+            log('urlResults', `Simulating URL: ${fakeURL}`, 'info');
+            scanner.scanURL(fakeURL);
+            log('urlResults', 'URL scanned — toast should appear if PII detected', 'pass');
+        }
+
+        // ────────────────────────────────────────────────────
+        // 7. Platform Detection Tests
+        // ────────────────────────────────────────────────────
+        function testPlatformDetection() {
+            document.getElementById('platformResults').innerHTML = '';
+            const el = 'platformResults';
+
+            const testHosts = [
+                { host: 'chat.openai.com', expected: 'ChatGPT' },
+                { host: 'claude.ai', expected: 'Claude' },
+                { host: 'gemini.google.com', expected: 'Gemini' },
+                { host: 'www.perplexity.ai', expected: 'Perplexity' },
+                { host: 'copilot.microsoft.com', expected: 'Copilot' },
+                { host: 'google.com', expected: null },
+            ];
+
+            for (const t of testHosts) {
+                let found = null;
+                for (const [key, config] of Object.entries(PLATFORM_CONFIG)) {
+                    if (config.hostPattern.test(t.host)) {
+                        found = config.name;
+                        break;
+                    }
+                }
+                const ok = found === t.expected;
+                const status = ok ? '✓ PASS' : '✗ FAIL';
+                log(el, `[${status}] ${t.host} → ${found || 'null'} (expected: ${t.expected || 'null'})`, ok ? 'pass' : 'fail');
+            }
+        }
+
+        // ────────────────────────────────────────────────────
+        // 6. Real-Time PII Monitor (test page wiring)
+        // ────────────────────────────────────────────────────
+        // Hook report function to log real-time events to the test panel
+        window.__aiInspectorReport = function (type, source, findings) {
+            console.log(`[Event] ${type} | ${source} |`, findings);
+            if (source === "realtime") {
+                log('realtimeResults',
+                    `[${type}] ${findings.map(f => f.name + ': ' + f.match).join(', ')}`,
+                    type.includes('blocked') ? 'fail' : 'warn'
+                );
+            }
+        };
+
+        // Create fake platform configs to test real-time monitor on this page
+        const testPlatformTextarea = {
+            name: "TestPage-Textarea",
+            inputSelector: '#realtimeTestTextarea',
+            submitButton: '#nonexistent',
+            icon: "🧪",
+        };
+        const testPlatformDiv = {
+            name: "TestPage-ContentEditable",
+            inputSelector: '#realtimeTestDiv',
+            submitButton: '#nonexistent',
+            icon: "🧪",
+        };
+
+        try { new RealtimeMonitor(detector, testPlatformTextarea); } catch (e) { console.warn("RealtimeMonitor textarea init:", e); }
+        try { new RealtimeMonitor(detector, testPlatformDiv); } catch (e) { console.warn("RealtimeMonitor div init:", e); }
+
+        log('realtimeResults', '✓ Real-time monitors attached — start typing PII to trigger hard block modal', 'pass');
+
+        // Auto-run detection tests on load
+        setTimeout(runDetectionTests, 500);
+    </script>
+</body>
+
+</html>

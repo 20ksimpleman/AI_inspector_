@@ -1,0 +1,298 @@
+/* ── AI Inspector Popup — Dark Premium Theme ── */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 360px;
+    min-height: 480px;
+    background: #0d0d1a;
+    color: #e0e0f0;
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 13px;
+    overflow-y: auto;
+}
+
+/* ── Header ── */
+
+.header {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    padding: 16px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255, 75, 75, 0.2);
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo {
+    width: 38px;
+    height: 38px;
+    background: linear-gradient(135deg, #ff4b4b, #cc2936);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    box-shadow: 0 4px 14px rgba(255, 75, 75, 0.3);
+}
+
+h1 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.3px;
+}
+
+.version {
+    font-size: 10px;
+    color: #7a7a9a;
+    margin-top: 2px;
+}
+
+/* ── Toggle Switch ── */
+
+.toggle-switch {
+    position: relative;
+    width: 42px;
+    height: 22px;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background: #333;
+    border-radius: 22px;
+    transition: 0.25s;
+}
+
+.slider::before {
+    content: "";
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    left: 3px;
+    bottom: 3px;
+    background: #fff;
+    border-radius: 50%;
+    transition: 0.25s;
+}
+
+.toggle-switch input:checked + .slider {
+    background: linear-gradient(135deg, #ff4b4b, #cc2936);
+}
+
+.toggle-switch input:checked + .slider::before {
+    transform: translateX(20px);
+}
+
+/* ── Stats row ── */
+
+.stats-row {
+    display: flex;
+    gap: 8px;
+    padding: 14px 18px;
+}
+
+.stat-card {
+    flex: 1;
+    background: #12121f;
+    border-radius: 10px;
+    padding: 12px 0;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.stat-number {
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.stat-label {
+    font-size: 10px;
+    color: #7a7a9a;
+    margin-top: 2px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.stat-card.blocked .stat-number {
+    color: #ff6b6b;
+}
+
+.stat-card.warned .stat-number {
+    color: #ffaa5b;
+}
+
+.stat-card.platforms .stat-number {
+    color: #6bc5ff;
+}
+
+/* ── Section ── */
+
+.section {
+    padding: 12px 18px;
+}
+
+.section-title {
+    font-size: 11px;
+    font-weight: 600;
+    color: #7a7a9a;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 10px;
+}
+
+.section-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+/* ── Platform chips ── */
+
+.platforms-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.platform-chip {
+    background: rgba(107, 197, 255, 0.08);
+    border: 1px solid rgba(107, 197, 255, 0.15);
+    color: #6bc5ff;
+    padding: 5px 10px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+/* ── Monitors ── */
+
+.monitors-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.monitor-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: #b0b0cc;
+}
+
+.monitor-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #555;
+}
+
+.monitor-dot.active {
+    background: #4caf50;
+    box-shadow: 0 0 6px rgba(76, 175, 80, 0.5);
+}
+
+/* ── Events List ── */
+
+.events-list {
+    max-height: 180px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.events-list::-webkit-scrollbar {
+    width: 4px;
+}
+
+.events-list::-webkit-scrollbar-thumb {
+    background: #333;
+    border-radius: 4px;
+}
+
+.event-item {
+    background: #12121f;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 8px;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.event-icon {
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+.event-details {
+    flex: 1;
+    min-width: 0;
+}
+
+.event-type {
+    font-size: 11px;
+    font-weight: 600;
+    color: #e0e0f0;
+}
+
+.event-meta {
+    font-size: 10px;
+    color: #6a6a8a;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.event-item.blocked {
+    border-left: 3px solid #ff4b4b;
+}
+
+.event-item.warned {
+    border-left: 3px solid #ffaa5b;
+}
+
+.empty-state {
+    color: #5a5a7a;
+    font-size: 12px;
+    text-align: center;
+    padding: 20px 0;
+}
+
+/* ── Clear button ── */
+
+.clear-btn {
+    background: none;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #7a7a9a;
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-size: 10px;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.clear-btn:hover {
+    color: #ff6b6b;
+    border-color: rgba(255, 75, 75, 0.3);
+}
