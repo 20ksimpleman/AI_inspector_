@@ -41,9 +41,18 @@
             console.log("[AI Inspector] Not on a known AI platform — monitoring form/clipboard/URL only");
         }
 
+        // Initialize monitors
         try { new FormMonitor(detector); } catch (e) { console.warn("[AI Inspector] FormMonitor init error:", e); }
         try { new ClipboardMonitor(detector); } catch (e) { console.warn("[AI Inspector] ClipboardMonitor init error:", e); }
         try { new URLScanner(detector); } catch (e) { console.warn("[AI Inspector] URLScanner init error:", e); }
+
+        // Initialize Realtime Monitor & Interceptors if on a supported platform
+        if (platform) {
+            try { new RealtimeMonitor(detector, platform); } catch (e) { console.warn("[AI Inspector] RealtimeMonitor init error:", e); }
+            try { setupKeyboardInterception(detector, platform); } catch (e) { console.warn("[AI Inspector] Keyboard interception init error:", e); }
+            try { setupButtonInterception(detector, platform); } catch (e) { console.warn("[AI Inspector] Button interception init error:", e); }
+            try { setupFetchInterception(detector, platform); } catch (e) { console.warn("[AI Inspector] Fetch interception init error:", e); }
+        }
 
         window.__aiInspectorReport = reportEvent;
     }
