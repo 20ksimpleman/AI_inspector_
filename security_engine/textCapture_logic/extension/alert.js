@@ -1,5 +1,5 @@
 /**
- * AI Inspector — Modern Block Modal
+ * AI Inspector — Modern Block Modal (Light & Bright Theme)
  * Shows a premium styled modal when PII is detected, with Proceed / Cancel options.
  * Returns a Promise<boolean> — true if user chose to proceed, false if cancelled.
  */
@@ -17,13 +17,14 @@ const AIInspectorAlert = (() => {
                 position: fixed;
                 inset: 0;
                 z-index: 2147483647;
-                background: rgba(0, 0, 0, 0.65);
-                backdrop-filter: blur(6px);
+                background: rgba(255, 255, 255, 0.85);
+                backdrop-filter: blur(8px);
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 animation: aiInspFadeIn 0.2s ease;
-                font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+                color: #111827;
             }
 
             @keyframes aiInspFadeIn {
@@ -32,110 +33,103 @@ const AIInspectorAlert = (() => {
             }
 
             @keyframes aiInspSlideUp {
-                from { transform: translateY(24px); opacity: 0; }
+                from { transform: translateY(16px); opacity: 0; }
                 to   { transform: translateY(0);    opacity: 1; }
             }
 
             .ai-inspector-modal {
-                background: #1a1a2e;
-                border: 1px solid rgba(255, 75, 75, 0.4);
+                background: #ffffff;
+                border: 1px solid #e5e7eb;
                 border-radius: 16px;
-                width: 480px;
-                max-width: 92vw;
-                box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 75, 75, 0.15);
-                animation: aiInspSlideUp 0.25s ease;
+                width: 440px;
+                max-width: 90vw;
+                box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+                animation: aiInspSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
                 overflow: hidden;
             }
 
             .ai-inspector-header {
-                background: linear-gradient(135deg, #ff4b4b 0%, #cc2936 100%);
-                padding: 20px 24px;
-                display: flex;
-                align-items: center;
-                gap: 12px;
+                padding: 24px 24px 0;
+                text-align: center;
             }
 
-            .ai-inspector-shield {
-                width: 40px;
-                height: 40px;
-                background: rgba(255, 255, 255, 0.2);
-                border-radius: 10px;
+            .ai-inspector-icon-wrapper {
+                width: 48px;
+                height: 48px;
+                background: #fee2e2;
+                color: #ef4444;
+                border-radius: 12px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                font-size: 22px;
+                margin: 0 auto 16px;
             }
 
-            .ai-inspector-header-text h3 {
+            .ai-inspector-icon-wrapper svg {
+                width: 24px;
+                height: 24px;
+                stroke-width: 2;
+            }
+
+            .ai-inspector-title {
                 margin: 0;
-                color: #fff;
-                font-size: 16px;
-                font-weight: 700;
-                letter-spacing: 0.3px;
+                font-size: 18px;
+                font-weight: 600;
+                color: #111827;
+                letter-spacing: -0.01em;
             }
 
-            .ai-inspector-header-text p {
-                margin: 4px 0 0;
-                color: rgba(255, 255, 255, 0.8);
-                font-size: 12px;
+            .ai-inspector-subtitle {
+                margin: 8px 0 0;
+                font-size: 14px;
+                color: #6b7280;
+                line-height: 1.5;
             }
 
             .ai-inspector-body {
                 padding: 20px 24px;
             }
 
-            .ai-inspector-body p {
-                color: #b0b0cc;
-                font-size: 13px;
-                margin: 0 0 14px;
-                line-height: 1.5;
-            }
-
             .ai-inspector-findings {
                 display: flex;
                 flex-wrap: wrap;
                 gap: 8px;
-                margin-bottom: 18px;
+                justify-content: center;
+                margin-bottom: 16px;
             }
 
             .ai-inspector-badge {
                 display: inline-flex;
                 align-items: center;
-                gap: 6px;
-                padding: 6px 12px;
-                border-radius: 8px;
+                padding: 4px 10px;
+                border-radius: 6px;
                 font-size: 12px;
-                font-weight: 600;
-                letter-spacing: 0.2px;
+                font-weight: 500;
+                background: #f3f4f6;
+                color: #374151;
+                border: 1px solid #e5e7eb;
             }
 
             .ai-inspector-badge.critical {
-                background: rgba(255, 50, 50, 0.15);
-                color: #ff6b6b;
-                border: 1px solid rgba(255, 50, 50, 0.3);
+                background: #fef2f2;
+                color: #b91c1c;
+                border-color: #fca5a5;
             }
 
             .ai-inspector-badge.high {
-                background: rgba(255, 150, 50, 0.15);
-                color: #ffaa5b;
-                border: 1px solid rgba(255, 150, 50, 0.3);
-            }
-
-            .ai-inspector-badge.medium {
-                background: rgba(255, 220, 50, 0.12);
-                color: #f0d060;
-                border: 1px solid rgba(255, 220, 50, 0.25);
+                background: #fff7ed;
+                color: #c2410c;
+                border-color: #fdba74;
             }
 
             .ai-inspector-match {
-                background: #12121f;
-                border: 1px solid rgba(255, 255, 255, 0.08);
+                background: #f9fafb;
+                border: 1px solid #e5e7eb;
                 border-radius: 8px;
-                padding: 10px 14px;
-                margin-bottom: 18px;
-                font-family: 'Cascadia Code', 'Fira Code', monospace;
-                font-size: 12px;
-                color: #ff6b6b;
+                padding: 12px;
+                font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+                font-size: 11px;
+                color: #4b5563;
                 word-break: break-all;
                 max-height: 80px;
                 overflow-y: auto;
@@ -143,89 +137,103 @@ const AIInspectorAlert = (() => {
 
             .ai-inspector-actions {
                 display: flex;
-                gap: 10px;
-                padding: 0 24px 20px;
+                flex-direction: column;
+                gap: 12px;
+                padding: 0 24px 24px;
             }
 
             .ai-inspector-btn {
-                flex: 1;
-                padding: 11px 0;
-                border-radius: 10px;
-                font-size: 13px;
-                font-weight: 600;
+                width: 100%;
+                padding: 10px 16px;
+                border-radius: 8px;
+                font-size: 14px;
+                font-weight: 500;
                 cursor: pointer;
-                transition: all 0.15s ease;
-                border: none;
-                letter-spacing: 0.3px;
+                transition: all 0.2s;
+                border: 1px solid transparent;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
             }
 
-            .ai-inspector-btn-cancel {
-                background: linear-gradient(135deg, #ff4b4b 0%, #cc2936 100%);
-                color: #fff;
+            .ai-inspector-btn-primary {
+                background: #4f46e5;
+                color: #ffffff;
+                box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
             }
 
-            .ai-inspector-btn-cancel:hover {
-                transform: translateY(-1px);
-                box-shadow: 0 6px 20px rgba(255, 75, 75, 0.35);
+            .ai-inspector-btn-primary:hover {
+                background: #4338ca;
             }
 
-            .ai-inspector-btn-proceed {
-                background: rgba(255, 255, 255, 0.06);
-                color: #888;
-                border: 1px solid rgba(255, 255, 255, 0.1);
+            .ai-inspector-btn-secondary {
+                background: #ffffff;
+                color: #d97706; /* Amber-600 for caution */
+                border-color: #e5e7eb;
             }
 
-            .ai-inspector-btn-proceed:hover {
-                background: rgba(255, 255, 255, 0.1);
-                color: #aaa;
+            .ai-inspector-btn-secondary:hover {
+                background: #f9fafb;
+                color: #b45309;
             }
 
-            /* ── Toast notification (for soft warnings) ── */
+            /* ── Toast notification (soft warning) ── */
             .ai-inspector-toast {
                 position: fixed;
-                top: 20px;
-                right: 20px;
+                top: 24px;
+                right: 24px;
                 z-index: 2147483646;
-                background: #1a1a2e;
-                border: 1px solid rgba(255, 170, 91, 0.4);
-                border-radius: 12px;
-                padding: 14px 20px;
-                color: #ffaa5b;
-                font-family: 'Segoe UI', -apple-system, sans-serif;
+                background: #ffffff;
+                border: 1px solid #e5e7eb;
+                border-radius: 10px;
+                padding: 16px;
+                color: #1f2937;
+                font-family: -apple-system, sans-serif;
                 font-size: 13px;
                 font-weight: 500;
-                box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
-                animation: aiInspSlideUp 0.25s ease;
-                max-width: 360px;
+                box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                animation: aiInspSlideInRight 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+                max-width: 380px;
+            }
+
+            .ai-inspector-toast-icon {
+                color: #f59e0b;
+                display: flex;
+                flex-shrink: 0;
             }
 
             .ai-inspector-toast.fade-out {
-                animation: aiInspFadeOut 0.3s ease forwards;
+                animation: aiInspFadeOutUp 0.2s ease forwards;
             }
 
-            @keyframes aiInspFadeOut {
-                to { opacity: 0; transform: translateY(-10px); }
+            @keyframes aiInspSlideInRight {
+                from { transform: translateX(20px); opacity: 0; }
+                to   { transform: translateX(0);    opacity: 1; }
+            }
+
+            @keyframes aiInspFadeOutUp {
+                to { opacity: 0; transform: translateY(-8px); }
             }
         `;
         document.head.appendChild(style);
     }
 
+    // ── Icons (SVG) ─────────────────────────────────────────────
+    const ICONS = {
+        shield: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>`,
+        lock: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>`,
+        alert: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>`,
+        warning: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>`
+    };
+
     // ── Block Modal ─────────────────────────────────────────────
 
-    /**
-     * Show a blocking modal with PII findings.
-     * @param {Array<{name: string, match: string, severity: string}>} findings
-     * @param {string} [source="prompt"] — what triggered it (prompt | paste | form | url)
-     * @returns {Promise<boolean>} — true if user chose "Proceed Anyway"
-     */
-    // ── Global bypass timer ─────────────────────────────────────
-    // When "Proceed Anyway" is clicked, ALL modal calls from any layer
-    // auto-resolve as true for 3 seconds. This prevents the cascade where
-    // real-time, keyboard, and button layers each show their own modal.
     let _proceedBypassUntil = 0;
 
     function showBlockModal(findings, source = "prompt") {
-        // If user recently clicked "Proceed Anyway", auto-allow for 3s
         if (Date.now() < _proceedBypassUntil) {
             console.log("[AI Inspector] Auto-proceeding (bypass active)");
             return Promise.resolve(true);
@@ -237,60 +245,62 @@ const AIInspectorAlert = (() => {
             const overlay = document.createElement("div");
             overlay.className = "ai-inspector-overlay";
 
-            const sourceLabel = {
-                prompt: "AI Prompt Submission",
+            const sourceLabels = {
+                prompt: "AI Prompt",
                 paste: "Clipboard Paste",
                 form: "Form Submission",
-                url: "URL Parameters",
-            }[source] || "Input";
+                url: "URL Parameter"
+            };
+            const sourceText = sourceLabels[source] || "Input";
 
-            const badges = findings
-                .map(
-                    (f) =>
-                        `<span class="ai-inspector-badge ${f.severity}">${f.name}</span>`
-                )
-                .join("");
+            const badges = findings.map(f =>
+                `<span class="ai-inspector-badge ${f.severity}">${f.name}</span>`
+            ).join("");
 
-            const matchPreview = findings
-                .map((f) => `${f.name}: ${maskValue(f.match)}`)
-                .join("\n");
+            const matchPreview = findings.map(f => `${f.name}: ${maskValue(f.match)}`).join("\n");
 
             overlay.innerHTML = `
                 <div class="ai-inspector-modal">
                     <div class="ai-inspector-header">
-                        <div class="ai-inspector-shield">🛡️</div>
-                        <div class="ai-inspector-header-text">
-                            <h3>Data Leak Prevention — Blocked</h3>
-                            <p>AI Inspector detected sensitive data in ${sourceLabel}</p>
+                        <div class="ai-inspector-icon-wrapper">
+                            ${ICONS.lock}
                         </div>
+                        <h3 class="ai-inspector-title">Data Leak Prevented</h3>
+                        <p class="ai-inspector-subtitle">
+                            AI Inspector blocked sensitive data in your ${sourceText}.
+                        </p>
                     </div>
                     <div class="ai-inspector-body">
-                        <p>The following PII types were detected and the action has been blocked to protect your data:</p>
                         <div class="ai-inspector-findings">${badges}</div>
                         <div class="ai-inspector-match">${escapeHtml(matchPreview)}</div>
                     </div>
                     <div class="ai-inspector-actions">
-                        <button class="ai-inspector-btn ai-inspector-btn-cancel" id="ai-insp-cancel">✕  Remove &amp; Cancel</button>
-                        <button class="ai-inspector-btn ai-inspector-btn-proceed" id="ai-insp-proceed">Proceed Anyway →</button>
+                        <button class="ai-inspector-btn ai-inspector-btn-primary" id="ai-insp-cancel">
+                            Secure My Data (Remove PII)
+                        </button>
+                        <button class="ai-inspector-btn ai-inspector-btn-secondary" id="ai-insp-proceed">
+                            I understand the risk, proceed anyway
+                        </button>
                     </div>
                 </div>
             `;
 
             document.body.appendChild(overlay);
 
+            // Focus primary button
+            const cancelBtn = overlay.querySelector("#ai-insp-cancel");
+            const proceedBtn = overlay.querySelector("#ai-insp-proceed");
+            cancelBtn.focus();
+
             const cleanup = (result) => {
-                if (result) {
-                    // "Proceed Anyway" — set 3-second bypass for ALL layers
-                    _proceedBypassUntil = Date.now() + 3000;
-                }
+                if (result) _proceedBypassUntil = Date.now() + 3000;
                 overlay.remove();
                 resolve(result);
             };
 
-            overlay.querySelector("#ai-insp-cancel").addEventListener("click", () => cleanup(false));
-            overlay.querySelector("#ai-insp-proceed").addEventListener("click", () => cleanup(true));
+            cancelBtn.addEventListener("click", () => cleanup(false));
+            proceedBtn.addEventListener("click", () => cleanup(true));
 
-            // Close on Escape key
             const onKey = (e) => {
                 if (e.key === "Escape") {
                     document.removeEventListener("keydown", onKey, true);
@@ -303,46 +313,27 @@ const AIInspectorAlert = (() => {
 
     // ── Toast notification (soft warning) ───────────────────────
 
-    /**
-     * Show a brief non-blocking toast notification.
-     * @param {string} message
-     * @param {number} [duration=4000]
-     */
     function showToast(message, duration = 4000) {
         injectStyles();
         const toast = document.createElement("div");
         toast.className = "ai-inspector-toast";
-        toast.textContent = `🛡️ ${message}`;
+        toast.innerHTML = `
+            <div class="ai-inspector-toast-icon">${ICONS.warning}</div>
+            <div>${message}</div>
+        `;
         document.body.appendChild(toast);
 
         setTimeout(() => {
             toast.classList.add("fade-out");
-            setTimeout(() => toast.remove(), 350);
+            setTimeout(() => toast.remove(), 250);
         }, duration);
-    }
-
-    // ── Legacy compatibility ────────────────────────────────────
-
-    /**
-     * Legacy blockSubmission — wraps the new modal.
-     */
-    function blockSubmission(event, findings) {
-        event.preventDefault();
-        event.stopPropagation();
-
-        const converted = findings.map((name) =>
-            typeof name === "string"
-                ? { name, match: "***", severity: "high" }
-                : name
-        );
-        showBlockModal(converted, "prompt");
     }
 
     // ── Helpers ─────────────────────────────────────────────────
 
     function maskValue(val) {
         if (!val || val.length <= 6) return "***";
-        return val.slice(0, 3) + "•".repeat(Math.min(val.length - 6, 12)) + val.slice(-3);
+        return val.slice(0, 3) + "•".repeat(Math.min(val.length - 6, 8)) + val.slice(-3);
     }
 
     function escapeHtml(str) {
@@ -351,6 +342,5 @@ const AIInspectorAlert = (() => {
         return div.innerHTML;
     }
 
-    // ── Public API ──────────────────────────────────────────────
-    return { showBlockModal, showToast, blockSubmission };
+    return { showBlockModal, showToast };
 })();

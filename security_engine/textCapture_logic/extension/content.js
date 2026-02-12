@@ -36,11 +36,7 @@
         const platform = detectPlatform();
 
         if (platform) {
-            console.log(`[AI Inspector] Platform detected: ${platform.name} ${platform.icon}`);
-            setupKeyboardInterception(detector, platform);
-            setupButtonInterception(detector, platform);
-            setupFetchInterception(detector, platform);
-            try { new RealtimeMonitor(detector, platform); } catch (e) { console.warn("[AI Inspector] RealtimeMonitor init error:", e); }
+            console.log(`[AI Inspector] Platform detected: ${platform.name}`);
         } else {
             console.log("[AI Inspector] Not on a known AI platform — monitoring form/clipboard/URL only");
         }
@@ -128,7 +124,7 @@
             if (findings.length > 0) {
                 console.warn("[AI Inspector] PII in outgoing API call:", url, findings.map(f => f.name));
                 AIInspectorAlert.showToast(
-                    `⚠️ PII detected in outgoing request: ${findings.map(f => f.name).join(", ")}`,
+                    `PII detected in outgoing request: ${findings.map(f => f.name).join(", ")}`,
                     5000
                 );
                 reportEvent("api_pii_warned", platform.name, findings);

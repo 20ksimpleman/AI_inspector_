@@ -64,7 +64,7 @@ class URLScanner {
         const allPii = findings.flatMap(f => f.piiTypes);
         const summary = findings.map(f => `${f.location}: ${f.piiTypes.map(p => p.name).join(", ")}`).join(" | ");
 
-        console.warn(`[AI Inspector] ⚠️ PII in URL:\n  ${url}\n  ${summary}`);
+        console.warn(`[AI Inspector] PII in URL:\n  ${url}\n  ${summary}`);
         AIInspectorAlert.showToast(`PII found in URL: ${allPii.map(p => p.name).join(", ")}`, 5000);
 
         if (typeof window.__aiInspectorReport === "function") {

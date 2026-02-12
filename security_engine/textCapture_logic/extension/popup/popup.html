@@ -1,19 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Inspector</title>
     <link rel="stylesheet" href="popup.css">
 </head>
+
 <body>
     <!-- Header -->
     <div class="header">
         <div class="header-left">
-            <div class="logo">🛡️</div>
+            <div class="logo-wrapper">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+            </div>
             <div>
                 <h1>AI Inspector</h1>
-                <p class="version">v2.0 — PII Data Leak Prevention</p>
+                <p class="version">v2.1 — PII Prevention</p>
             </div>
         </div>
         <label class="toggle-switch">
@@ -23,17 +30,17 @@
     </div>
 
     <!-- Stats -->
-    <div class="stats-row">
-        <div class="stat-card blocked">
-            <div class="stat-number" id="blockedCount">0</div>
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-value" id="blockedCount">0</div>
             <div class="stat-label">Blocked</div>
         </div>
-        <div class="stat-card warned">
-            <div class="stat-number" id="warnedCount">0</div>
+        <div class="stat-card">
+            <div class="stat-value" id="warnedCount">0</div>
             <div class="stat-label">Warned</div>
         </div>
-        <div class="stat-card platforms">
-            <div class="stat-number">5</div>
+        <div class="stat-card">
+            <div class="stat-value">5</div>
             <div class="stat-label">Platforms</div>
         </div>
     </div>
@@ -41,37 +48,38 @@
     <!-- Platforms -->
     <div class="section">
         <div class="section-title">Protected Platforms</div>
-        <div class="platforms-grid">
-            <span class="platform-chip">🤖 ChatGPT</span>
-            <span class="platform-chip">🧠 Claude</span>
-            <span class="platform-chip">✨ Gemini</span>
-            <span class="platform-chip">🔍 Perplexity</span>
-            <span class="platform-chip">💠 Copilot</span>
+        <div class="platforms-list">
+            <span class="platform-pill">ChatGPT</span>
+            <span class="platform-pill">Claude</span>
+            <span class="platform-pill">Gemini</span>
+            <span class="platform-pill">Perplexity</span>
+            <span class="platform-pill">Copilot</span>
         </div>
     </div>
 
-    <!-- Monitors -->
+    <!-- Active Monitors -->
     <div class="section">
         <div class="section-title">Active Monitors</div>
         <div class="monitors-list">
-            <div class="monitor-item"><span class="monitor-dot active"></span>Prompt Interception</div>
-            <div class="monitor-item"><span class="monitor-dot active"></span>Clipboard Monitoring</div>
-            <div class="monitor-item"><span class="monitor-dot active"></span>Form Scanning</div>
-            <div class="monitor-item"><span class="monitor-dot active"></span>URL Parameter Scanning</div>
+            <div class="monitor-item"><span class="status-dot"></span>Prompt Scanning</div>
+            <div class="monitor-item"><span class="status-dot"></span>Real-time Typing</div>
+            <div class="monitor-item"><span class="status-dot"></span>Clipboard Protection</div>
+            <div class="monitor-item"><span class="status-dot"></span>URL & Form Scan</div>
         </div>
     </div>
 
     <!-- Recent Events -->
     <div class="section">
-        <div class="section-title-row">
-            <span class="section-title">Recent Events</span>
-            <button id="clearBtn" class="clear-btn">Clear</button>
+        <div class="section-header">
+            <div class="section-title">Recent Events</div>
+            <button id="clearBtn" class="btn-text">Clear</button>
         </div>
         <div id="eventsList" class="events-list">
-            <div class="empty-state">No events yet. Start browsing AI platforms.</div>
+            <div class="empty-state">No events yet.</div>
         </div>
     </div>
 
     <script src="popup.js"></script>
 </body>
+
 </html>
